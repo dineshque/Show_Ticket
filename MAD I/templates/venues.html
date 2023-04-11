@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %} User Dashboard {% endblock%}
+
+{%block href%} href="/{{u.user_id}}/userdashbord" {%endblock%}
+
+{% block Search %}
+
+ <form class="form-group mx-5 my-lg-0 " action ="/{{u.user_id}}/venues" method = "post" >
+      <input name="q" class="form mr-sm-2" type="search" placeholder="Search" >
+      <button class="btn btn-outline-success mx-0 my-sm-0" type="submit">Search</button>
+    </form>
+
+{% endblock %}
+
+{%block link%} <a href="/{{u.user_id}}/profile">Bookings</a> {% endblock %}
+<!-----------------------------------------Body Tag------------------------------------------------->
+{% block body %}
+
+<!-----------------------------------------Display Venue--------------------------------------------->
+<div class="container">
+  
+  <div class="row justify-content-center mt-5">
+
+
+    {% if v|length!=0 %}
+    {% for v in v | reverse %}
+    
+    <div class="col-md-12 mb-5">
+      
+      <div class="card bg-light mb-3" style="max-width: 100rem;">
+        
+        <div class="card-header col-12">
+          <h4>{{v.venue_name}}</h4>
+          {{v.Location}}
+        </div>
+        
+        <div class="card-body">
+
+          <!-------------------------------------Display Show------------------------------------------->
+          
+          <div class="row justify-content-center mt-5">
+                 
+            {% if v.shows|length!=0 %}
+            {% for s in range(1,v.shows|length+1) %}
+            <div class="col-md-4 mb-5">
+              <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                
+                <div class="card-header col-12">
+                  <h3>{{v.shows[-s].show_name}}</h3>
+                  <p> {{v.shows[-s].start_time.strftime(' %-I:%M %p')}} to {{v.shows[-s].end_time.strftime(' %-I:%M %p')}}</p>
+                </div>
+
+                <div class="card-body">
+                  Rating : {{v.shows[-s].rating}}<br>
+                  Price : {{sv[v.venue_id][v.shows[-s].show_id].d_price}} <br> <br>
+                  
+
+                  {% if sv[v.venue_id][v.shows[-s].show_id].n_seat<=0 %}
+                    <button type="button" class="btn btn-success"">HouseFul</button>
+                  {% else %}
+
+                  <div class="btn-group" role="group" aria-label="Basic outlined example">
+
+                    <a href="/{{u.user_id}}/{{v.venue_id}}/{{v.shows[-s].show_id}}/booking">
+                      <button type="button" class="btn btn-outline-info mb-3">Book it</button>
+                    </a>
+                    
+                  </div>
+                  {% endif %}
+                </div>
+                
+              </div>
+              
+            </div>
+            
+            {%endfor%}
+            
+          </div>
+          
+          {%else%}
+          
+          <div class="mt-2"> No Show Avalable </div>
+          
+          {%endif%}
+          
+        </div>
+        
+      </div>
+      
+    </div>
+    
+    {%endfor%}
+    {% else %}
+    No shows or venue Available
+    {%endif%}
+    
+  </div>
+  
+</div>
+
+{% endblock%}
+<!-- </body> -->
+
+</html>

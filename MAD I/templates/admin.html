@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %} Admin {% endblock%}
+
+{%block href%} href="/{{u.admin_id}}/dashbord" {%endblock%}
+
+{%block link %} <a href="#">Summary</a> {% endblock %}
+
+<!------------------------Body Tag-------------------------------->
+{% block body %}
+<!------------------------Navigation Tag--------------------------->
+
+<!------------------------Display Venue---------------------------->
+<div class="container">
+        <div class="row justify-content-center mt-5">
+          {% if u.venues|length!=0 %}
+          {% for v in u.venues %}
+            <div class="col-md-4 mb-5">
+                <div class="card">
+                    <div class="card-header col-12">
+                        <h4>{{v.venue_name}}</h4>
+                    </div>
+                    <div class="card-body">
+<!--                       Adding Existing Show -->
+                      
+<div class="dropdown mb-5" style="text-align:center">
+  <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Add Show
+  </button>
+  <ul class="dropdown-menu">
+    {% for s in s %}            
+    <li><a class="dropdown-item" href="/{{u.admin_id}}/{{v.venue_id}}/{{s.show_id}}/addshow"><h5>{{s.show_name}}</h5>
+    {{s.start_time.strftime('at %-I:%M %p')}}</a><br></li>
+    {%endfor%}
+  </ul>
+</div>
+
+                      
+<!------------------------Display Show----------------------------->
+                      {% if v.shows|length!=0 %}
+                      {% for s in v.shows %}
+                      <h3>{{s.show_name}}</h3>
+                      <div class="btn-group" role="group" aria-label="Basic outlined example">
+                        
+                        <a href="/{{u.admin_id}}/{{v.venue_id}}/{{s.show_id}}/editshow">
+  <button type="button" class="btn btn-outline-warning mx-1">Edit</button>
+                          </a>
+
+                        <form action="/{{u.admin_id}}/{{v.venue_id}}/{{s.show_id}}/deleteshow" method="POST" id="delete-form" onsubmit="return confirm('Are you sure you want to delete this Show?')">
+      <input type="hidden" name="item_id" value="123">
+      <button type="submit" class="btn btn-outline-danger mb-3">Delete</button>
+    </form>
+</div>
+                               
+                      {%endfor%}
+                      {%else%}
+                      <div class="mt-2"> No Show Created </div>
+                      {%endif%}
+                       <div style="text-align:center; margin-top:100px;">
+                        <a href="/{{u.admin_id}}/{{v.venue_id}}/createshow"><button class="btn btn-primary" type="button">Create Show</button></a>
+                        </div>
+                      
+                      <div style="text-align:center; margin-top:50px;">
+
+                      <div class="btn-group" role="group" aria-label="Basic outlined example">
+                        
+                      <a href="/{{u.admin_id}}/{{v.venue_id}}/edit" >
+                        <button type="button" class="btn btn-warning mx-1">Edit</button> </a>
+                                              
+                        <form action="/{{u.admin_id}}/{{v.venue_id}}/delete" method="POST" id="delete-form" onsubmit="return confirm('Are you sure you want to delete this Venue?')" >
+      <input type="hidden" name="item_id" value="123">
+      <button type="submit" class="btn btn-danger d-inline mb-3" >Delete</button>
+    </form>
+                      </div>
+                      </div>      
+                    </div>
+                </div>
+            </div>
+          {%endfor%}
+          {% else %}
+    No shows or venue created
+    {%endif%}
+        </div>
+    </div>
+  
+  <div class="d-grid gap-2 d-md-block" style="text-align:center; margin-top:100px;">
+  <a href="/{{u.admin_id}}/createVenue"><button class="btn btn-primary" type="button">Create Venue</button></a>
+    
+</div>
+{% endblock%}
+<!-- </body> -->
+</html>

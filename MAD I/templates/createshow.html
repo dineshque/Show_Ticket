@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create Show</title>
+  </head>
+  <body>
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <title>Admin</title>
+</head>
+<body>
+  
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container">
+    <a class="navbar-brand" href="#">{{u.username}}</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/{{u.admin_id}}/dashbord">Home</a>
+        </li>
+      </ul>
+      <h3> <a href="#">Summary</a> | <a href="/">Logout</a> </h3>
+    </div>
+  </div>
+</nav>
+<div class="container">
+   <h1>Create a new Show</h1>
+    <form action="/{{u.admin_id}}/{{v.venue_id}}/createshow" method="post">
+      <label for="show">Show Name:
+:</label>
+      <input type="text" id="show" name="show"><br><br>
+
+      <label for="rating">Rating:</label>
+      <input type="text" id="rating" name="rating"><br><br>
+
+      <label for="start_time">Starting Time:</label>
+      <input type="time" id="start_time" name="start_time"><br><br>
+
+      <label for="end_time">Ending Time:</label>
+      <input type="time" id="end_time" name="end_time"><br><br>
+
+      <label for="tags">Tags:</label>
+      <input type="text" id="tags" name="tags"><br><br>
+
+      <label for="price">Price:</label>
+      <input type="text" id="price" name="price"><br><br>
+
+      <button type="submit" class="btn btn-outline-success">Save</button>
+    </form>
+</div>
+</body>
+</html>
+

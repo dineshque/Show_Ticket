@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %} User Dashboard {% endblock%}
+
+{%block href%} href="/{{u.user_id}}/userdashbord" {%endblock%}
+
+{% block Search %}
+
+ <form class="form-group mx-5 my-lg-0 " action ="/{{u.user_id}}/userdashbord" method = "post" >
+      <input name="q" class="form mr-sm-2" type="search" placeholder="Search" >
+      <button class="btn btn-outline-success mx-0 my-sm-0" type="submit">Search</button>
+    </form>
+
+{% endblock %}
+
+ {%block linkforvenues %} <a href="/{{u.user_id}}/venues">Venues</a> |{% endblock %}
+
+{%block link%} <a href="/{{u.user_id}}/profile">Bookings</a> {% endblock %}
+<!-----------------------------------------Body Tag------------------------------------------------->
+{% block body %}
+
+<!-----------------------------------------Navigation Tag-------------------------------------------->
+
+<!-----------------------------------------Display Venue--------------------------------------------->
+<div class="container">
+          <div class="row justify-content-center mt-5">
+            
+            {% if sh|length!=0 %}
+            {% for s in sh | reverse %}
+
+            {% if current_time <= s.end_time %}
+            <div class="col-md-4 mb-5">
+              <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                <div class="card-header col-12">
+                  <h3>{{s.show_name}}</h3>
+                  <p>{{s.tags}}</p>
+                </div>
+
+                <div class="card-body">
+                  Rating : {{s.rating}}<br> <br>
+                  <a href="/{{u.user_id}}/{{s.show_id}}/venue">
+                  <img src="{{ url_for('static', filename='m1.jpg') }}" alt="My Image" width="250" height="150">
+                  </a>
+                </div>
+                
+              </div>
+              
+            </div>
+              {%endif%}
+
+            {%endfor%}
+            
+          
+          {%else%}
+          
+          <div class="mt-2"> No Show Avalable </div>
+          
+          {%endif%}   
+  </div>
+  
+</div> 
+
+{% endblock%}
+<!-- </body> -->
+
+</html>

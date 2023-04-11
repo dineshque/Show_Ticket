@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %} Booked {% endblock%}
+
+{%block href%} href="/{{u.user_id}}/userdashbord" {%endblock%}
+
+<!------------------------Body Tag-------------------------------->
+{% block body %}
+<!------------------------Navigation Tag--------------------------->
+
+<!------------------------Display Venue---------------------------->
+<div class="container">
+        <div class="row justify-content-center mt-5">
+          {% if u.bookings|length!=0 %}
+          {% for b in range(u.bookings|length) %}
+<div class="p-5 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-5 mb-5">
+  <div style="text-align: center"> <h1> Ticket </h1> <h3> {{v[b].venue_name}} - {{s[b].show_name}}</h3> </div> <br>
+   <h4> <div style="text-align: center">Show start at
+ --> {{s[b].start_time.strftime('%-I:%M %p')}} </div></h4> <br>
+     <h2> <div style="text-align: center"> Number of Seat  Booked : {{u.bookings[b].Number}} </div> <br>
+     <div style="text-align: center"> Total Price : <strong>{{u.bookings[b].total}}</strong> </div>
+
+       {% if current_time > s[b].end_time %}
+     <div style="text-align: right"> <button > Rate </button> </div>
+         {% endif%}
+     </h2>   
+  
+</div>
+          
+          {%endfor%}
+          {% else %}
+    No Seat Booked yet.
+    {%endif%}
+        </div>
+    </div>
+</div>
+{% endblock%}
+<!-- </body> -->
+</html>
